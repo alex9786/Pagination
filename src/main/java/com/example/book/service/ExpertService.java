@@ -1,5 +1,7 @@
 package com.example.book.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.example.book.dto.BookPage;
@@ -17,6 +19,8 @@ public interface ExpertService {
 	Page<Expert> getDetail(int page, int size);
 
 	BookPage<Expert> getAll(int page, int size);
+
+	List<Expert> getAllExpert(int pageNo, int size);
 
 	
 }

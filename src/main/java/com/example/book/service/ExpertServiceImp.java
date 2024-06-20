@@ -29,6 +29,7 @@ public class ExpertServiceImp implements ExpertService{
 		entity.setAge(dto.getAge());
 		entity.setGender(dto.getGender());
 		entity.setCity(dto.getCity());
+		entity.setWork(dto.getWork());
 	    expertRepo.save(entity);
 	    return dto;
 	}
@@ -53,21 +54,32 @@ public class ExpertServiceImp implements ExpertService{
 	}
 
 	@Override
-	public Page<Expert> getDetail(int page, int size) {
-		Pageable pageable = PageRequest.of(page, size);
-		return expertRepo.findAll(pageable);
-	}
-
-	@Override
 	public BookPage<Expert> getAll(int page, int size) {
 		Pageable pageable= PageRequest.of(page, size);
 		Page<Expert> page2= expertRepo.findAll(pageable);
 		BookPage<Expert> bookPage = new BookPage<Expert>();
 		bookPage.setContant(page2.getContent());
-		bookPage.setFrist(page2.getNumber());
-		bookPage.setLast(page2.getNumber());
+		bookPage.setPageNo(page2.getNumber());
+		bookPage.setCount(page2.getNumberOfElements());
+		bookPage.setLast(page2.isLast());
 		return bookPage;
 	}
+
+	@Override
+	public Page<Expert> getDetail(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return expertRepo.findAll(pageable);
+	}
+
+
+	@Override
+	public List<Expert> getAllExpert(int pageNo, int size) {
+		Pageable pageable=PageRequest.of(pageNo, size);
+		Page<Expert> pageResult = expertRepo.findAll(pageable);
+        return pageResult.getContent();
+	}
+	
+	
 
 	
 

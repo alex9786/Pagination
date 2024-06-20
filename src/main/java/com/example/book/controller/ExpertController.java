@@ -1,6 +1,9 @@
 package com.example.book.controller;
 
 import org.springframework.data.domain.Page;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,29 +30,42 @@ public class ExpertController {
 		return expertService.post(dto);
 	}
 	
-	@GetMapping("/get/{id}")
+	@GetMapping("/getExpert/{id}")
 	public ExpertDto get(@PathVariable ("id") int id) {
 		return expertService.get(id);
 	}
 	
 /*********** PAGINATION *************/	
 
-	@GetMapping("/getAll")
+	
+	
+	@GetMapping("/get/{page}/{size}")
+	public Page<Expert> getDetail(@PathVariable int page,@PathVariable int size){
+		return expertService.getDetail(page,size);
+	}
+
+	@GetMapping("/find/{pageNo}/{size}")
+	public List<Expert> getAllExpert(@PathVariable int pageNo,int size){
+		return expertService.getAllExpert(pageNo,size);
+	}
+	
+	@GetMapping("/getAll/{page}")	
+	public BookPage<Expert> getAll (@PathVariable int page,@RequestParam(defaultValue = "5") int size){
+		return expertService.getAll(page,size);
+	}
+	
+	
+	@GetMapping("/findAll/{page}")
 	public Page<Expert> getExpert(
-			@RequestParam(defaultValue = "0") int page,
+			@PathVariable int page,
 			@RequestParam(defaultValue = "5") int size){
 		return expertService.getExpert(page,size);
 	}
 	
-	@GetMapping("/getdetail/{page}/{size}")
-	public Page<Expert> getDetail(@PathVariable int page,@PathVariable int size){
-		return expertService.getDetail(page,size);
-	}
 	
-	@GetMapping("/get/{page}/{size}")	
-	public BookPage<Expert> getAll (@PathVariable int page,@PathVariable int size){
-		return expertService.getAll(page,size);
-	}
+	
+	
+	
 	
 
 }

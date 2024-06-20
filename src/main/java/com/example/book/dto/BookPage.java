@@ -9,8 +9,10 @@ public class BookPage<T> {
 	
 	private List<T> contant;
 	
-	private int frist;
+	private int pageNo;
 	
-	private int last;
+	private int count;
+	
+	private boolean last;
 
 }
